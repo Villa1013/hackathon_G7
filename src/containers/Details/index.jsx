@@ -7,15 +7,31 @@ import { Row, Col } from "../../components/Grid";
 import IMG_Frubana from "../../assets/images/frubana-logo.png";
 import GlobalContext from "../../context/global";
 import styles from "./index.module.sass";
+import { APIResquest } from '../../utils/api';
+
 
 const DetailsPage = () => {
   const day = 30;
   const getParams = useParams();
 
-  const { loadingReferences, references } = useContext(GlobalContext);
+   const getReferenceInfo = (storeId, storeReferenceId) => new Promise((resolve, reject) => {
+    APIResquest({
+      uri: `https://catalogue.chiper.co/store/${storeId}/available-inventory/recommended/info/${storeReferenceId}`,
+      method: 'GET',
+    }).then((resp) => {
+      console.log('endpoint', resp);
+      resolve(resp);
+    }).catch((e) => {
+      console.error(e);
+      reject(e);
+    });
+  });
 
+  const { loadingReferences, references } = useContext(GlobalContext);
+  const [painted, setPainted] = useState([])
   const [loadingDetails, setLoadingDetails] = useState(true);
   const [details, setDetails] = useState({});
+
 
   useEffect(() => {
     if (!loadingReferences) {
@@ -69,11 +85,13 @@ const DetailsPage = () => {
                         className={styles.nice}
                         style={{ backgroundColor: details.tagColor }}
                       >
-                        Mejor precio: {details.tagBestPrice}
+                        Nivel de precio: 3
+                        {/* {details.tagBestPrice} */}
                       </span>
                     </div>
 
                     <div className="w-full inline-flex items-center mt-4">
+
                       <span className="inline-flex items-center text-sm tracking-tighter px-3 py-1 leading-snug rounded-md font-black bg-black text-white shadow">
                         1 unit
                       </span>
@@ -85,36 +103,39 @@ const DetailsPage = () => {
                       <span className="ml-3 inline-flex items-center text-sm tracking-tighter px-3 py-1 leading-snug rounded-md font-black bg-white text-black shadow">
                         10+ units
                       </span>
+                      <span className="ml-3 inline-flex items-center text-lg tracking-tighter px-3 py-1 leading-snug rounded-md font-black bg-white text-black shadow">
+                        <a href="https://chiper.co/pedir/dashboard"> <i class="fas fa-shopping-cart"></i> </a>
+                      </span>
+
                     </div>
                   </div>
 
                   <div className="w-full border-box grid grid-cols-3 border border-gray-300 rounded-lg">
                     <div className="w-full h-full border-box p-5">
                       <h2 className="w-full inline-block mb-2 text-lg">
-                        Prices history
+                        Ordenes en el mes:
                       </h2>
 
                       <span className={styles.mainHistoryDescription}>
-                        Check all the prices for this product in the last {day}{" "}
-                        days
-                      </span>
+                        En tu localidad, se venden 15 aceites por dia</span>
                     </div>
 
                     <div className="w-full h-full border-box p-5 bg-gray-200">
                       <span className={styles.mainHistoryDescription}>
-                        Highest Price in the last {day} days:
+                        Rank del producto:
                       </span>
                       <span className="w-full inline-block text-black text-xl font-medium mt-3">
-                        $ 9999.99
+                        2
                       </span>
                     </div>
 
                     <div className="w-full h-full border-box p-5 bg-gray-200 border-l border-gray-300">
                       <span className={styles.mainHistoryDescription}>
-                        Lowest Price in the last {day} days:
+                        Cuanto stock minimo deberias tener:
+                        {/* {day} days: */}
                       </span>
                       <span className="w-full inline-block text-black text-xl font-medium mt-3">
-                        $ 999.99
+                        30
                       </span>
                     </div>
                   </div>
