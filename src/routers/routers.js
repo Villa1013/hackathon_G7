@@ -1,6 +1,5 @@
 import Home from "../containers/Home";
 import Details from "../containers/Details";
-import Scraping from "../containers/Scraping";
 import PageNotFound from "../containers/404";
 
 const myRoutes = [

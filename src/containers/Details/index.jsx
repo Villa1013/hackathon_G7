@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import { Loader } from "chiper-components-library";
 import Wrapper from "../../components/Wrapper";
 import { Row, Col } from "../../components/Grid";
-import IMG_Frubana from "../../assets/images/frubana-logo.png";
 import GlobalContext from "../../context/global";
+import Analytics from './Analytics/analytics'
 import styles from "./index.module.sass";
 
 const DetailsPage = () => {
@@ -16,12 +16,6 @@ const DetailsPage = () => {
 
   const [loadingDetails, setLoadingDetails] = useState(true);
   const [details, setDetails] = useState({});
-
-  useEffect(() => {
-    if (!loadingReferences) {
-      loadDetails();
-    }
-  }, [loadingReferences, getParams.productId]);
 
   const loadDetails = () => {
     if (getParams.productId) {
@@ -34,7 +28,11 @@ const DetailsPage = () => {
     }
   };
 
-  console.log(details);
+  React.useEffect(() => {
+    if (!loadingReferences) {
+      loadDetails();
+    }
+  }, [loadingReferences, getParams.productId]);
 
   return (
     <>
@@ -129,8 +127,8 @@ const DetailsPage = () => {
         <Wrapper className={styles.otherPricesWrapper}>
           <header className={styles.otherPricesHeader}>
             <h2 className="w-full leading-snug text-xl">
-              <span className="font-light">Compare prices with other</span>{" "}
-              <strong>confident stores</strong>
+              <span className="font-light">Analytics Orders:</span>{" "}
+              <strong>More Oportunities</strong>
             </h2>
           </header>
 
@@ -140,75 +138,12 @@ const DetailsPage = () => {
             </div>
           ) : (
             <section className="w-full">
-              <ul className={styles.otherPricesList}>
-                <ListCard
-                  img={details.imageURL}
-                  company="Chiper"
-                  price={details.price.chiper.total}
-                  url="https://chiper.co/"
-                />
-                <ListCard
-                  img={details.imageURL}
-                  company="Frubana"
-                  price={details.price.frubana.total}
-                  url="https://www.frubana.com/"
-                />
-                <ListCard
-                  img={details.imageURL}
-                  company="Jumbo"
-                  price={details.price.jumbo.total}
-                  url="https://www.tiendasjumbo.co/"
-                />
-              </ul>
+              <Analytics />
             </section>
           )}
         </Wrapper>
       </div>
     </>
-  );
-};
-
-const ListCard = (props) => {
-  return (
-    <li className="w-full inline-flex items-center">
-      <figure className={styles.otherPricesListProductFigure}>
-        <img src={props.img} alt="" className="object-contain w-full h-full" />
-      </figure>
-
-      <div className={`${styles.otherPricesListGrid} grid grid-cols-6 gap-0`}>
-        {/* <figure className="inline-flex justify-center items-center h-8">
-          <img
-            src={IMG_Frubana}
-            alt=""
-            className="object-contain w-full h-full"
-          />
-        </figure> */}
-
-        <div className="inline-flex justify-center items-center">
-          {props.company}
-        </div>
-
-        <div className="inline-flex justify-center items-center">
-          <span className="inline-flex items-center text-sm tracking-tighter px-3 py-1 leading-snug rounded-md font-black bg-black text-white shadow">
-            1+ unit
-          </span>
-        </div>
-
-        <div className="inline-flex justify-center items-center mx-12">
-          <span className="text-xl font-medium">${props.price}</span>
-        </div>
-
-        <div className="inline-flex justify-center items-center">Colômbia</div>
-
-        <div>{/*  */}</div>
-
-        <div className="inline-flex justify-end items-center">
-          <a href={props.url} target="_blank" className="btn green-theme">
-            Visit Store
-          </a>
-        </div>
-      </div>
-    </li>
   );
 };
 

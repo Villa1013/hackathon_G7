@@ -29,21 +29,21 @@ const Cards = ({ item }) => {
           <div className="back">
             {item.price.chiper.total && (
               <div className={styles.listPrice}>
-                <img src={chiperIco} />
+                <img src={chiperIco} alt="chiper" />
                 <p>${item.price.chiper.total}</p>
               </div>
             )}
 
             {item.price.frubana.total && (
               <div className={styles.listPrice}>
-                <img src={frubanaIco} />
+                <img src={frubanaIco} alt="chiper" />
                 <p>${item.price.frubana.total}</p>
               </div>
             )}
 
             {item.price.jumbo.total && (
               <div className={styles.listPrice}>
-                <img src={jumboIco} />
+                <img src={jumboIco} alt="chiper" />
                 <p>${item.price.jumbo.total}</p>
               </div>
             )}
