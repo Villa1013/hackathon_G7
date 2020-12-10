@@ -1,0 +1,15 @@
+@import '../../assets/styles/resolutions.sass'
+
+.wrapper
+  width: 100%
+  max-width: 1366px
+  margin: 0 auto
+  display: flex
+  flex-wrap: wrap
+  box-sizing: border-box
+
+@include device(desktop)
+  .wrapper
+    padding: 0 20px
+    max-width: 100%
+    margin: 0

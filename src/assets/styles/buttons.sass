@@ -1,0 +1,56 @@
+@import './colors'
+@import './mixins'
+
+.btn
+  text-decoration: none
+  background-color: transparent
+  border: 1px solid transparent
+  color: color(black)
+  box-sizing: border-box
+  border-radius: 6px
+  padding: 0 20px
+  display: inline-flex
+  justify-content: center
+  align-content: center
+  align-items: center
+  height: 40px
+  line-height: 40px
+  font-size: 14px
+  cursor: pointer
+  outline: none
+  font-weight: 600
+  @include transition
+
+  &:hover, &:active, &:focus
+    text-decoration: none
+    background-color: transparent
+    border-color: transparent
+    color: color(black)
+    box-shadow: none
+    outline: none
+  
+  &:disabled,
+  &.disabled
+    opacity: .4
+  
+  &.btn-primary
+    background: color(primary)
+    color: white
+  
+  i
+    margin: 0 10px 0 0
+    &.right
+      margin: 0 0 0 10px
+    &.m-0
+      margin: 0
+
+  @each $color in $colors
+    &.#{nth($color, 1)}-theme
+      background-color: nth($color, 2)
+      color: set-notification-text-color(nth($color, 2))
+      border-color: nth($color, 2)
+
+      &:hover, &:active, &:focus
+        background-color: darken(nth($color, 2), 10)
+        color: set-notification-text-color(nth($color, 2))
+        text-decoration: none

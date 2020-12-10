@@ -1,0 +1,55 @@
+{
+  "references_json": [
+    {
+      "referenceName": "Aceite corriente - Riquisimo - Botella 1000 ml",
+      "tagBestPrice": "Frubana",
+      "tagColor": "#ea9020",
+      "scaleTag": "\"1-4\"",
+      "imageURL": "https://d221xxk5mfaxk5.cloudfront.net/app/7701018007519-rJVHyb14v-M.png",
+      "referenceId": 284629,
+      "price": {
+        "chiper": { "total": null, "totalWithDiscount": false },
+        "jumbo": { "total": 7.19, "totalWithDiscount": false },
+        "frubana": { "total": 6174, "totalWithDiscount": true },
+        "bestPrice": { "total": 6174, "totalWithDiscount": false }
+      },
+      "countryId": 6,
+      "cityId": 1,
+      "category": "Canasta básica"
+    },
+    {
+      "referenceName": "Aceite corriente - Riquisimo - Botella 1000 ml",
+      "tagBestPrice": "Chiper",
+      "tagColor": "#2EBD68",
+      "scaleTag": "\"1-4\"",
+      "imageURL": "https://d221xxk5mfaxk5.cloudfront.net/app/7701018007519-rJVHyb14v-M.png",
+      "referenceId": 284630,
+      "price": {
+        "chiper": { "total": null, "totalWithDiscount": false },
+        "jumbo": { "total": 7.19, "totalWithDiscount": false },
+        "frubana": { "total": 0, "totalWithDiscount": false },
+        "bestPrice": { "total": null, "totalWithDiscount": false }
+      },
+      "countryId": 6,
+      "cityId": 2,
+      "category": "Canasta básica"
+    },
+    {
+      "referenceName": "Aceite corriente - Riquisimo - Botella 1000 ml",
+      "tagBestPrice": "Frubana",
+      "tagColor": "#ea9020",
+      "scaleTag": "\"1-4\"",
+      "imageURL": "https://d221xxk5mfaxk5.cloudfront.net/app/7701018007519-rJVHyb14v-M.png",
+      "referenceId": 284631,
+      "price": {
+        "chiper": { "total": 0, "totalWithDiscount": false },
+        "jumbo": { "total": 7.19, "totalWithDiscount": false },
+        "frubana": { "total": null, "totalWithDiscount": true },
+        "bestPrice": { "total": null, "totalWithDiscount": false }
+      },
+      "countryId": 6,
+      "cityId": 3,
+      "category": "Canasta básica"
+    }
+  ]
+}

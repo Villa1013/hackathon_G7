@@ -1,0 +1,53 @@
+.table-scroll
+    height: 72vh
+
+.chiper-table
+	width: 100%
+	table-layout: auto
+
+	thead
+		border-bottom: 1px solid #bfbfbf
+
+		th
+			font-size: 12px
+			padding: 6px 7px
+			font-weight: 900
+			text-align: left
+
+	tbody
+		tr
+			border-bottom: 1px solid #d8d8d8
+			&.no-results
+				border: none
+				box-shadow: none
+
+		td
+			font-size: 12px
+			padding: 5px 7px
+			vertical-align: middle
+
+			&.error-result
+				text-align: center
+				padding: 15px 0
+				border: none
+				box-shadow: none
+			
+			.button-table
+				font-size: 26px
+				display: flex
+				justify-content: center
+				align-items: center
+				width: 100%
+				&:hover
+					text-decoration: none
+
+.error-result
+	height: 40vh
+	p
+		background: transparent
+		font-size: 14px
+		font-weight: 500
+		color: #949494
+		i
+			display: block
+			font-size: 25px

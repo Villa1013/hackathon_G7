@@ -1,0 +1,49 @@
+@import '../../assets/styles/colors'
+@import '../../assets/styles/mixins'
+
+.header
+  background-color: color(white)
+  padding: 12px 0
+  position: relative
+  width: 100%
+  top: 0
+  z-index: 99
+  @include box-shadow
+
+.wrapper
+  justify-content: space-between
+  align-content: center
+  align-items: center
+  flex-wrap: nowrap
+
+.logo
+  display: inline-flex
+
+  img
+    width: 90px
+    display: inline-flex
+
+.searh_global
+  display: inline-flex
+  width: 27%
+  position: relative
+  input
+    width: 100%
+    background-color: #f7f7f7
+    color: rgb(119, 121, 140)
+    border: 1px solid color(border-color)
+    border-radius: 6px
+    padding: 11px 25px 11px 45px
+    outline: none
+    box-sizing: border-box
+    font-weight: 500
+    &::placeholder
+      color: rgb(119, 121, 140)
+  i
+    color: #212121
+    position: absolute
+    bottom: 0
+    top: 0
+    left: 15px
+    line-height: 48px
+    z-index: 3
