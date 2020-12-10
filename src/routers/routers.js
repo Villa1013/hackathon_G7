@@ -12,13 +12,6 @@ const myRoutes = [
     routerProps: {},
   },
   {
-    path: "/scraping",
-    active: true,
-    component: Scraping,
-    context: null,
-    routerProps: {},
-  },
-  {
     path: "/:productId",
     active: true,
     component: Details,
