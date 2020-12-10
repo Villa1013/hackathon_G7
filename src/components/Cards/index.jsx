@@ -1,80 +1,69 @@
-import React from "react";
-import chiperIco from "../../assets/images/chiper-ico.png";
-import frubanaIco from "../../assets/images/frubana-ico.jpeg";
-import jumboIco from "../../assets/images/jumbo-ico.png";
-import styles from "./index.module.sass";
+/* eslint-disable react/prop-types */
+import React from 'react';
+import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
+import { AiFillFire } from 'react-icons/ai';
+import NumberFormat from 'react-number-format';
+import DEFAULT_IMAGE from './assets/images/testImage.png';
 
-const Cards = ({ item }) => {
-  // const formatterCO = new Intl.NumberFormat("en-US", {
-  //   style: "currency",
-  //   currency: "USD",
-  //   minimumFractionDigits: 0,
-  // });
+const Cards = ({
+  id,
+  name,
+  prices = [{
+    managerTotal: null,
+    startQuantity: 1,
+    discountedTotal: null,
+  }],
+  medium = DEFAULT_IMAGE,
+}) => {
+  const getLabel = (index) => {
+    const { startQuantity } = prices[index];
 
-  console.log(item);
+    if (index === prices.length - 1) {
+      return `${startQuantity} Uds`;
+    }
+    const { startQuantity: startQuantityNextLevel } = prices[index + 1];
+    return `${startQuantity}  a ${startQuantityNextLevel - 1} Uds.`;
+  };
+  const getPrice = () => {
+    if (prices[0].discountedTotal) return prices[0].discountedTotal;
+    return prices[0].managerTotal;
+  };
 
   return (
-    <div className={styles.card}>
-      {/* <span className="w-full">
-        <span className="inline-flex items-center text-sm tracking-tighter px-3 py-1 leading-snug rounded-md font-black bg-white text-black shadow w-90">
-          5 - 10 units
-        </span>
-      </span> */}
+    <Link to={`/${id}`} className="text-md w-48 p-4 m-2 box-border bg-white border border-gray-100 rounded-lg  transition-all duration-300 ease-in-out hover:shadow cursor-pointer flex flex-col">
+      <div className="">
+        <figure className="w-full p-1 flex justify-items-center">
+          <img className="w-full" src={medium} alt="Product" />
+        </figure>
 
-      <figure className={styles.figure}>
-        <div className={styles.effect}>
-          <div className="front">
-            <img src={item.imageURL} alt={item.name} />
-          </div>
-          <div className="back">
-            {item.price.chiper.total && (
-              <div className={styles.listPrice}>
-                <img src={chiperIco} />
-                <p>${item.price.chiper.total}</p>
-              </div>
-            )}
-
-            {item.price.frubana.total && (
-              <div className={styles.listPrice}>
-                <img src={frubanaIco} />
-                <p>${item.price.frubana.total}</p>
-              </div>
-            )}
-
-            {item.price.jumbo.total && (
-              <div className={styles.listPrice}>
-                <img src={jumboIco} />
-                <p>${item.price.jumbo.total}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </figure>
-
-      <div className={styles.cardContent}>
-        <div className={styles.prices}>
-          <span className={styles.currentPrice}>
-            ${item.price.bestPrice.total}
-          </span>
-          {/**<span className={styles.oldPrice}>$0.00</span>*/}
+        <div className={`grid grid-cols-${prices.length} gap-1.5 items-center mt-2`}>
+          {prices.map((item, index) => (
+            <div key={item} className={`text-center text-xs rounded-full px-1 ${index === 0 ? 'bg-gray-800 text-white' : 'bg-white text-gray-800 shadow'}`}>
+              {
+                getLabel(index)
+              }
+            </div>
+          ))}
         </div>
 
-        <span
-          className={styles.nice}
-          style={{ backgroundColor: item.tagColor }}
-        >
-          Mejor precio: {item.tagBestPrice}
-        </span>
+        <div className="font-black text-md text-black mt-2">
+          <span><NumberFormat prefix="$" value={getPrice()} /></span>
+        </div>
 
-        {/* {item.channelId === 1 ?(
-        <span className={styles.nice}>Mejor precio: {item.tagBestPrice}</span>
-        ):(
-        <span className={styles.discount}>Mejor precio: Frubana</span>
-        )} */}
-
-        <span className={styles.description}>{item.referenceName}</span>
+        <div className="text-md mt-2">
+          <p>{name}</p>
+        </div>
       </div>
-    </div>
+
+      <div className="flex mt-3 flex-grow items-end">
+        <div className="border-t border-gray-200 w-full pt-2">
+          <AiFillFire data-tip="This reference is on fire in your location!" className="text-red-500" />
+        </div>
+      </div>
+
+      <ReactTooltip />
+    </Link>
   );
 };
 
