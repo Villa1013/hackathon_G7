@@ -200,13 +200,13 @@ const DetailsPage = () => {
                         Rating del producto
                       </span>
                       <span className="w-full inline-block text-black text-xl font-medium mt-3">
-                        {10 * product.rating}
+                        {parseFloat(100 * product.rating).toFixed(2)} %
                       </span>
                     </div>
 
                     <div className="w-full h-full border-box p-5 bg-gray-200 border-l border-gray-300">
                       <span className={styles.mainHistoryDescription}>
-                        Cuanto stock minimo deberias tener:
+                        Macro:
                         {/* {day} days: */}
                       </span>
                       <span className="w-full inline-block text-black text-xl font-medium mt-3">
