@@ -5,7 +5,7 @@ const Wrapper = (props) => {
   const { children, className = '', ...rest } = props;
 
   return (
-    <div className="bg-gray-100 w-full h-full">
+    <div className="w-full clearfix">
       <div {...rest} className={`${styles.wrapper} ${className} `}>
         {children}
       </div>
