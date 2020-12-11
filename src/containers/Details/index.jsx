@@ -8,11 +8,17 @@ import GlobalContext from '../../context/global';
 import Analytics from './Analytics/analytics';
 import styles from './index.module.sass';
 import { APIResquest } from '../../utils/api';
+import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
+import { getHotItems } from '../../utils/requests/getHotItems';
+import { getInfoStore } from '../../utils/requests/getInfoStore';
+import { getLastOrders } from '../../utils/requests/getLastOrders';
 
 const DetailsPage = () => {
   const day = 30;
   const getParams = useParams();
-  console.log('test');
+
+
+
   const getReferenceInfo = (storeId, storeReferenceId) => new Promise((resolve, reject) => {
     APIResquest({
       uri: `https://catalogue.chiper.co/store/${storeId}/available-inventory/recommended/info/${storeReferenceId}`,
@@ -28,16 +34,57 @@ const DetailsPage = () => {
     });
   });
 
+
+
+  const init = async () => {
+    const storeId = getParams.storeId;
+    const hotReferences = await getHotItems(storeId);
+
+    const promises = hotReferences.map((item) => new Promise((resolve) => {
+      getReferenceInfo(storeId, item.storeReferenceId)
+        .then((res) => {
+          resolve(res);
+        });
+    }));
+
+    Promise.all(promises).then((values) => {
+      const newItems = values.map((reference) => {
+        const additionalData = hotReferences.find((h) => h.storeReferenceId === reference.id);
+        return { ...reference, ...additionalData };
+      });
+
+      getLastOrders(storeId).then((orders) => {
+        getInfoStore(storeId).then((_storeInfo) => {
+          setStoreInfo(_storeInfo);
+          setLastOrders(orders);
+          setItems(newItems);
+        });
+      });
+    });
+  };
+
+
   useEffect(() => {
-    getReferenceInfo('127598', '83377');
+    getHotItems(getParams.storeId).then(x => {
+      getReferenceInfo(getParams.storeId, getParams.productId).then(item => {
+        const dataRating = x.find((h) => h.storeReferenceId === item.id)
+        setProduct({...item, ...dataRating});
+      })
+    })
   }, []);
 
   const { loadingReferences, references } = useContext(GlobalContext);
   const [loadingDetails, setLoadingDetails] = useState(true);
   const [details, setDetails] = useState({});
   const [product, setProduct] = useState({ prices: [] });
+  const [lastOrders, setLastOrders] = useState([]);
+  const [items, setItems] = useState([]);
+  const [storeInfo, setStoreInfo] = useState({});
+  const [lastItem, setLastItem] = useState({})
 
-  console.log('isauhdiusad', product);
+
+  console.log('items', items);
+  console.log("producto solo",product)
 
   const loadDetails = () => {
     if (getParams.productId) {
@@ -55,7 +102,17 @@ const DetailsPage = () => {
       loadDetails();
     }
   }, [loadingReferences, getParams.productId]);
-  console.log(details);
+
+  console.log(product)
+
+  const getAditionalInfo = () => {
+    console.log("product id",product.id)
+    const item = items.find((h) => h.id === product.id)
+    setLastItem(item)
+    console.log("item solo", item)
+
+  }
+
   return (
     <>
       <Header />
@@ -94,11 +151,11 @@ const DetailsPage = () => {
                       </span>
                       <span
                         className={styles.nice}
-                        style={{ backgroundColor: '#900' }}
+                        // style={{ backgroundColor: details.tagColor }}
                       >
                         Nivel de precio:
                         {' '}
-                        {product.locationId}
+                        {product.priceLevel}
                         {/* {details.tagBestPrice} */}
                       </span>
                     </div>
@@ -134,26 +191,26 @@ const DetailsPage = () => {
                       </h2>
 
                       <span className={styles.mainHistoryDescription}>
-                        En tu localidad, se venden 15 aceites por dia
+                        En tu localidad, se venden 15 {product.name} por dia
                       </span>
                     </div>
 
                     <div className="w-full h-full border-box p-5 bg-gray-200">
                       <span className={styles.mainHistoryDescription}>
-                        Rank del producto:
+                        Rating del producto
                       </span>
                       <span className="w-full inline-block text-black text-xl font-medium mt-3">
-                        2
+                        {parseFloat(100 * product.rating).toFixed(2)} %
                       </span>
                     </div>
 
                     <div className="w-full h-full border-box p-5 bg-gray-200 border-l border-gray-300">
                       <span className={styles.mainHistoryDescription}>
-                        Cuanto stock minimo deberias tener:
+                        Macro:
                         {/* {day} days: */}
                       </span>
                       <span className="w-full inline-block text-black text-xl font-medium mt-3">
-                        30
+                        {product.macroName}
                       </span>
                     </div>
                   </div>
