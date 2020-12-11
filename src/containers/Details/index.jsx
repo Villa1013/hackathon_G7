@@ -1,14 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import Header from "../../components/Header";
-import { Loader } from "chiper-components-library";
-import Wrapper from "../../components/Wrapper";
-import { Row, Col } from "../../components/Grid";
-import GlobalContext from "../../context/global";
-import Analytics from './Analytics/analytics'
-import styles from "./index.module.sass";
+import React, { useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { Loader } from 'chiper-components-library';
+import Header from '../../components/Header';
+import Wrapper from '../../components/Wrapper';
+import { Row, Col } from '../../components/Grid';
+import GlobalContext from '../../context/global';
+import Analytics from './Analytics/analytics';
+import styles from './index.module.sass';
 import { APIResquest } from '../../utils/api';
-
 
 const DetailsPage = () => {
   const day = 30;
@@ -43,9 +42,9 @@ const DetailsPage = () => {
   const loadDetails = () => {
     if (getParams.productId) {
       const data = references.find(
-        (item) => item.referenceId === Number(getParams.productId)
+        (item) => item.referenceId === Number(getParams.productId),
       );
-
+      debugger;
       setDetails(data);
       setLoadingDetails(false);
     }
@@ -56,7 +55,7 @@ const DetailsPage = () => {
       loadDetails();
     }
   }, [loadingReferences, getParams.productId]);
-
+  console.log(details);
   return (
     <>
       <Header />
@@ -114,7 +113,11 @@ const DetailsPage = () => {
                         10+ units
                       </span>
                       <span className="ml-3 inline-flex items-center text-lg tracking-tighter px-3 py-1 leading-snug rounded-md font-black bg-white text-black shadow">
-                        <a href="https://chiper.co/pedir/dashboard"> <i className="fas fa-shopping-cart"></i> </a>
+                        <a href="https://chiper.co/pedir/dashboard">
+                          {' '}
+                          <i className="fas fa-shopping-cart" />
+                          {' '}
+                        </a>
                       </span>
 
                     </div>
@@ -127,7 +130,8 @@ const DetailsPage = () => {
                       </h2>
 
                       <span className={styles.mainHistoryDescription}>
-                        En tu localidad, se venden 15 aceites por dia</span>
+                        En tu localidad, se venden 15 aceites por dia
+                      </span>
                     </div>
 
                     <div className="w-full h-full border-box p-5 bg-gray-200">
@@ -160,7 +164,8 @@ const DetailsPage = () => {
         <Wrapper className={styles.otherPricesWrapper}>
           <header className={styles.otherPricesHeader}>
             <h2 className="w-full leading-snug text-xl">
-              <span className="font-light">Analytics Orders:</span>{" "}
+              <span className="font-light">Analytics Orders:</span>
+              {' '}
               <strong>More Oportunities</strong>
             </h2>
           </header>
