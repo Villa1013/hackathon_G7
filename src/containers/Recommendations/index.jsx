@@ -1,64 +1,63 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from 'react';
-import Loader from 'react-loader-spinner';
+import React, { useRef } from 'react';
+// import Loader from 'react-loader-spinner';
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
-import Card from '../../components/Cards';
-import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
-import { getHotItems } from '../../utils/requests/getHotItems';
+// import Card from '../../components/Cards';
+// import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
+// import { getHotItems } from '../../utils/requests/getHotItems';
+import ListOfItems from './ListOfItems';
+import Map from '../../components/Map';
 import styles from './index.module.sass';
 
-const Recommendations = (props) => {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
+const Recommendations = () => {
+  const refMap = useRef(null);
+  const refZone = useRef(null);
+  const getPosition = () => new Promise((resolve) => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      resolve(position);
+    });
+  });
 
-  const init = async () => {
-    setLoading(true);
-    const storeId = props?.match?.params?.storeId;
-    const hotReferences = await getHotItems(storeId);
+  const handleMapLoaded = async (map) => {
+    refMap.current = map;
 
-    const promises = hotReferences.map((item) => new Promise((resolve) => {
-      getReferenceInfo(storeId, item.storeReferenceId)
-        .then((res) => {
-          resolve(res);
-        });
-    }));
+    const position = await getPosition();
+    const { coords: { longitude: lng, latitude: lat } } = position;
+    const zone = {
+      center: { lat, lng },
+      radius: 1000,
+    };
+    map.setCenter({ lat: Number(lat), lng: Number(lng) });
 
-    Promise.all(promises).then((values) => {
-      setItems(values);
-      setLoading(false);
+    refZone.current = new window.google.maps.Circle({
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35,
+      map,
+      center: zone.center,
+      radius: zone.radius,
     });
   };
-
-  useEffect(() => {
-    init();
-  }, []);
 
   return (
     <>
       <Header />
       <Wrapper className={styles.main}>
-        {
-          loading
-            ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <Loader
-                  type="Puff"
-                  color="#FA0236"
-                  height={100}
-                  width={100}
+        <div className="flex w-full flex-wrap">
 
-                />
-              </div>
-            )
+          <div className="w-128 h-128 bg-gray-300 rounded-lg mt-3">
+            <Map lng={-74.07209} lat={4.710989} onMapLoaded={handleMapLoaded} />
+          </div>
 
-            : (
-              <div className="flex flex-wrap m-0 mx-auto">
-                {items.map((item) => <Card key={item.id} storeId={props?.match?.params?.storeId} {...item} />)}
-              </div>
-            )
-        }
+          <div className="flex-grow mt-3">
+            <ListOfItems />
+          </div>
+
+        </div>
 
       </Wrapper>
     </>
