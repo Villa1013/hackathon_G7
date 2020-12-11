@@ -55,7 +55,7 @@ const Recommendations = (props) => {
 
             : (
               <div className="flex flex-wrap m-0 mx-auto">
-                {items.map((item) => <Card key={item.id} {...item} />)}
+                {items.map((item) => <Card key={item.id} storeId={props?.match?.params?.storeId} {...item} />)}
               </div>
             )
         }

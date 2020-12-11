@@ -15,6 +15,7 @@ const Cards = ({
     discountedTotal: null,
   }],
   medium = DEFAULT_IMAGE,
+  storeId,
 }) => {
   const getLabel = (index) => {
     const { startQuantity } = prices[index];
@@ -31,7 +32,7 @@ const Cards = ({
   };
 
   return (
-    <Link to={`/${id}`} className="text-md w-48 p-4 m-2 box-border bg-white border border-gray-100 rounded-lg  transition-all duration-300 ease-in-out hover:shadow cursor-pointer flex flex-col">
+    <Link to={`recommendations/${storeId}/details//${id}`} className="text-md w-48 p-4 m-2 box-border bg-white border border-gray-100 rounded-lg  transition-all duration-300 ease-in-out hover:shadow cursor-pointer flex flex-col">
       <div className="">
         <figure className="w-full p-1 flex justify-items-center">
           <img className="w-full" src={medium} alt="Product" />
