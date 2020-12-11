@@ -38,13 +38,13 @@ const Recommendations = (props) => {
       });
 
       getLastOrders(storeId).then((orders) => {
-        setLastOrders(orders);
-        setItems(newItems);
-        setLoading(false);
+        getInfoStore(storeId).then((_storeInfo) => {
+          setStoreInfo(_storeInfo);
+          setLastOrders(orders);
+          setItems(newItems);
+          setLoading(false);
+        });
       });
-    });
-    getInfoStore(storeId).then((_storeInfo) => {
-      setStoreInfo(_storeInfo);
     });
   };
   const drawingZone = () => {
