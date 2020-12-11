@@ -101,7 +101,7 @@ const Recommendations = (props) => {
         <div className="w-full">
 
           <div className="w-full">
-            <h3 className="font-black text_xl">Tus Recomendados</h3>
+            <h3 className="font-black text-xl">Tus Recomendados</h3>
             <h4 className="font-black text-lg">{storeInfo?.storeName || 'Nombre de tienda desconocido'}</h4>
           </div>
 
