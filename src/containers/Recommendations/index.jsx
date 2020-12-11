@@ -1,21 +1,25 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loader-spinner';
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
 import Card from '../../components/Cards';
-import { getReferenceInfo } from './requests/getReferenceInfo';
-import { getHotItems } from './requests/getHotItems';
+import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
+import { getHotItems } from '../../utils/requests/getHotItems';
 import styles from './index.module.sass';
 
-const Recommendations = () => {
+const Recommendations = (props) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const init = async () => {
     setLoading(true);
-    const hotReferences = await getHotItems();
+    const storeId = props?.match?.params?.storeId;
+    const hotReferences = await getHotItems(storeId);
+
     const promises = hotReferences.map((item) => new Promise((resolve) => {
-      getReferenceInfo(item.categoryId, item.referenceId)
+      getReferenceInfo(storeId, item.storeReferenceId)
         .then((res) => {
           resolve(res);
         });

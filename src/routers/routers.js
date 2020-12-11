@@ -1,3 +1,5 @@
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Details from '../containers/Details';
 import PageNotFound from '../containers/404';
 import Recommendations from '../containers/Recommendations';
@@ -5,6 +7,14 @@ import Recommendations from '../containers/Recommendations';
 const myRoutes = [
   {
     path: '/',
+    active: true,
+    component: () => <Redirect to="/recommendations/125576" />,
+    context: null,
+    routerProps: {},
+
+  },
+  {
+    path: '/recommendations/:storeId',
     active: true,
     component: Recommendations,
     context: null,
