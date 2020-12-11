@@ -47,13 +47,13 @@ const Recommendations = () => {
     <>
       <Header />
       <Wrapper className={styles.main}>
-        <div className="flex w-full flex-wrap">
+        <div className="w-full">
 
-          <div className="w-128 h-128 bg-gray-300 rounded-lg mt-3">
+          <div className="w-full h-128 bg-gray-300 rounded-lg mt-3 mx-auto">
             <Map lng={-74.07209} lat={4.710989} onMapLoaded={handleMapLoaded} />
           </div>
 
-          <div className="flex-grow mt-3">
+          <div className="mt-3 w-full">
             <ListOfItems />
           </div>
 

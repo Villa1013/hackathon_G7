@@ -46,7 +46,7 @@ const ListOfItems = (props) => {
             )
 
             : (
-              <div className="flex flex-wrap m-0 mx-auto">
+              <div className="flex flex-wrap m-0 mx-auto justify-center">
                 {items.map((item) => (
                   <Card
                     key={item.id}
