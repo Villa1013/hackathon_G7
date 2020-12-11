@@ -18,7 +18,6 @@ const DetailsPage = () => {
       uri: `https://catalogue.chiper.co/store/${storeId}/available-inventory/recommended/info/${storeReferenceId}`,
       method: 'GET',
     }).then((resp) => {
-      console.log('endpoint', resp);
       resolve(resp);
     }).catch((e) => {
       console.error(e);

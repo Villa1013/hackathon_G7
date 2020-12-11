@@ -1,5 +1,5 @@
 // tailwind.config.js
-const { colors } = require('tailwindcss/defaultTheme');
+const { colors, fontSize, spacing } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   purge: [],
@@ -10,10 +10,19 @@ module.exports = {
         redChiper: '#FA0236',
       },
       spacing: {
+        ...spacing,
         72: '18rem',
         84: '21rem',
         96: '24rem',
         128: '34rem',
+      },
+      fontSize: {
+        ...fontSize,
+        xxs: '.625rem',
+        xxxs: '.5rem',
+      },
+      maxWidth: {
+        '3/4': '75%',
       },
     },
   },

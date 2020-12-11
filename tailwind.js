@@ -1,5 +1,5 @@
 // tailwind.config.js
-const { colors } = require('tailwindcss/defaultTheme');
+const { colors, fontSize } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   purge: [],
@@ -14,6 +14,11 @@ module.exports = {
         84: '21rem',
         96: '24rem',
         128: '34rem',
+      },
+      fontSize: {
+        ...fontSize,
+        xxs: '.625rem',
+        xxxs: '.5rem',
       },
     },
   },

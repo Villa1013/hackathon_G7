@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
 import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
 import { getHotItems } from '../../utils/requests/getHotItems';
+import { getLastOrders } from '../../utils/requests/getLastOrders';
 import ListOfItems from './ListOfItems';
 import Map from '../../components/Map';
 import styles from './index.module.sass';
@@ -16,6 +17,7 @@ const Recommendations = (props) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [storeInfo, setStoreInfo] = useState({});
+  const [lastOrders, setLastOrders] = useState([]);
 
   const init = async () => {
     setLoading(true);
@@ -35,14 +37,17 @@ const Recommendations = (props) => {
         return { ...reference, ...additionalData };
       });
 
-      setItems(newItems);
-      setLoading(false);
+      getLastOrders(storeId).then((orders) => {
+        setLastOrders(orders);
+        setItems(newItems);
+        setLoading(false);
+      });
     });
     getInfoStore(storeId).then((_storeInfo) => {
       setStoreInfo(_storeInfo);
     });
   };
-  const DrawingZone = () => {
+  const drawingZone = () => {
     const position = { lng: Number(storeInfo.longitude), lat: Number(storeInfo.latitude) };
     refMap.current.setCenter(position);
 
@@ -64,6 +69,16 @@ const Recommendations = (props) => {
     });
 
     const infowindow = new window.google.maps.InfoWindow();
+    window.google.maps.event.addListener(
+      refMarker.current,
+      'click',
+      (function (marker) {
+        return function () {
+          infowindow.setContent('Mi tienda');
+          infowindow.open(refMap.current, marker);
+        };
+      }(refMarker.current)),
+    );
   };
   useEffect(() => {
     init();
@@ -71,7 +86,7 @@ const Recommendations = (props) => {
 
   useEffect(() => {
     if (items.length && refMap.current) {
-      DrawingZone();
+      drawingZone();
     }
   }, [JSON.stringify(storeInfo)]);
 
@@ -90,7 +105,7 @@ const Recommendations = (props) => {
           </div>
 
           <div className="mt-4 w-full">
-            <ListOfItems items={items} loading={loading} />
+            <ListOfItems items={items} loading={loading} lastOrders={lastOrders} />
           </div>
 
         </div>

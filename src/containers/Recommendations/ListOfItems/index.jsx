@@ -3,7 +3,9 @@ import { withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import Card from '../../../components/Cards';
 
-const ListOfItems = ({ loading, items, match }) => (
+const ListOfItems = ({
+  loading, items, match, lastOrders,
+}) => (
   <>
     {
           loading
@@ -26,6 +28,7 @@ const ListOfItems = ({ loading, items, match }) => (
                     key={item.id}
                     storeId={match?.params?.storeId}
                     {...item}
+                    lastOrders={lastOrders}
                   />
                 ))}
               </div>
