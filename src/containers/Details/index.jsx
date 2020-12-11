@@ -12,7 +12,7 @@ import { APIResquest } from '../../utils/api';
 const DetailsPage = () => {
   const day = 30;
   const getParams = useParams();
-
+  console.log('test');
   const getReferenceInfo = (storeId, storeReferenceId) => new Promise((resolve, reject) => {
     APIResquest({
       uri: `https://catalogue.chiper.co/store/${storeId}/available-inventory/recommended/info/${storeReferenceId}`,

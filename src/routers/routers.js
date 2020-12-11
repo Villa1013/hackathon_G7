@@ -21,7 +21,7 @@ const myRoutes = [
     routerProps: {},
   },
   {
-    path: 'recommendations/:storeId/details/:productId',
+    path: '/recommendations/:storeId/details/:productId',
     active: true,
     component: Details,
     context: null,
