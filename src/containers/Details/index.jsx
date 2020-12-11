@@ -24,6 +24,8 @@ const DetailsPage = () => {
       uri: `https://catalogue.chiper.co/store/${storeId}/available-inventory/recommended/info/${storeReferenceId}`,
       method: 'GET',
     }).then((resp) => {
+      console.log('endpoint', resp);
+      setProduct(resp);
       console.log('product', resp);
       resolve(resp);
     }).catch((e) => {
@@ -223,9 +225,9 @@ const DetailsPage = () => {
         <Wrapper className={styles.otherPricesWrapper}>
           <header className={styles.otherPricesHeader}>
             <h2 className="w-full leading-snug text-xl">
-              <span className="font-light">Analytics Orders:</span>
+              <span className="font-light">Porcentaje de:</span>
               {' '}
-              <strong>More Oportunities</strong>
+              <strong>Compra en tu zona</strong>
             </h2>
           </header>
 

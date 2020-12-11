@@ -88,7 +88,7 @@ const Recommendations = (props) => {
     if (items.length && refMap.current) {
       drawingZone();
     }
-  }, [JSON.stringify(storeInfo)]);
+  }, [JSON.stringify(storeInfo), JSON.stringify(items)]);
 
   const handleMapLoaded = async (map) => {
     refMap.current = map;

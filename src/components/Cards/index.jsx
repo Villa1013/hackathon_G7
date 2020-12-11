@@ -64,14 +64,14 @@ const Cards = ({
 
       <div className="flex mt-3 flex-grow items-end">
         <div className="border-t border-gray-200 w-full pt-2 flex">
-          <AiFillFire data-tip="This reference is on fire in your location!" className="text-red-500 mr-2" />
+          <AiFillFire data-tip="Esta referencia esta siendo muy bien vendida en tu zona" className="text-red-500 mr-2" />
           {
             rating > 0.3
-            && <BsFillStarFill data-tip="Best fit for you" className="text-yellow-200 mr-2" />
+            && <BsFillStarFill data-tip="Recomendado para ti!" className="text-yellow-200 mr-2" />
           }
           {
             !isInLastOrders
-            && <AiFillExclamationCircle data-tip="you are losing sales because of not purchasing these product" className="text-yellow-400" />
+            && <AiFillExclamationCircle data-tip="Estas perdiendo ventas en tu zona de este producto" className="text-yellow-400" />
           }
         </div>
       </div>
