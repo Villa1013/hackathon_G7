@@ -8,3 +8,31 @@
 
 .product
     margin-bottom: 25px
+
+.gridBody
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(12rem,1fr))
+    grid-gap: 15px
+    justify-items: center
+
+
+.map
+  grid-column: 1/4
+  min-height: 12rem
+
+@include device(small-tablet)
+
+  .map
+    grid-column: 1/3
+@include device(mobile)
+
+
+  .map
+    grid-column: 1/2
+
+
+
+
+
+
+

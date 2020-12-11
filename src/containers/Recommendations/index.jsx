@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 // import Loader from 'react-loader-spinner';
+import Loader from 'react-loader-spinner';
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
 import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
@@ -98,22 +99,35 @@ const Recommendations = (props) => {
     <>
       <Header />
       <Wrapper className={styles.main}>
-        <div className="w-full">
+        {
+          loading
+            ? (
+              <div className="w-full flex items-center justify-center absolute left-0 top-0 bottom-0 right-0">
+                <Loader
+                  type="Puff"
+                  color="#FA0236"
+                  height={100}
+                  width={100}
+                />
+              </div>
+            )
+            : (
+              <div className="w-full h-full bg-gray-100 rounded-lg p-3">
 
-          <div className="w-full">
-            <h3 className="font-black text-xl">Tus Recomendados</h3>
-            <h4 className="font-black text-lg">{storeInfo?.storeName || 'Nombre de tienda desconocido'}</h4>
-          </div>
+                <div className="w-full">
+                  <h3 className="font-black text-xl">Tus Recomendados</h3>
+                  <h4 className="font-black text-lg">{storeInfo?.storeName || 'Nombre de tienda desconocido'}</h4>
+                </div>
 
-          <div className="w-full h-128 bg-gray-300 rounded-lg mt-3 mx-auto relative p-1">
-            <Map lng={-74.07209} lat={4.710989} onMapLoaded={handleMapLoaded} />
-          </div>
-
-          <div className="mt-4 w-full">
-            <ListOfItems items={items} loading={loading} lastOrders={lastOrders} />
-          </div>
-
-        </div>
+                <div className={styles.gridBody}>
+                  <div className={`w-full h-full bg-gray-300 rounded-lg mt-3 mx-auto relative p-1 ${styles.map}`}>
+                    <Map lng={-74.07209} lat={4.710989} onMapLoaded={handleMapLoaded} />
+                  </div>
+                  <ListOfItems items={items} loading={loading} lastOrders={lastOrders} />
+                </div>
+              </div>
+            )
+        }
 
       </Wrapper>
     </>

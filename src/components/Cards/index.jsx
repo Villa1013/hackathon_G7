@@ -37,7 +37,7 @@ const Cards = ({
 
   const isInLastOrders = !!lastOrders.find((item) => item.storeReferenceId === storeReferenceId);
   return (
-    <Link to={`${storeId}/details/${id}`} className="text-md w-48 p-4 m-2 box-border bg-white border border-gray-100 rounded-lg  transition-all duration-300 ease-in-out hover:shadow cursor-pointer flex flex-col">
+    <Link to={`${storeId}/details/${id}`} className="text-md w-48 p-4 m-2 box-border bg-white  rounded-lg  transition-all duration-300 ease-in-out hover:shadow cursor-pointer flex flex-col border border-gray-200 shadow-xs">
       <div className="">
         <figure className="w-full p-1 flex justify-items-center">
           <img className="w-full" src={medium} alt="Product" />
