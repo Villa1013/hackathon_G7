@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
+import { Loader } from 'chiper-components-library';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { postMap } from '../../../utils/requests/postMap';
 
 const Analytics = () => {
+  const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
@@ -14,16 +16,17 @@ const Analytics = () => {
         y: item.orderRate,
         drilldown: item.storeReference,
       }))
-      console.log(serieFormat)
       setData(serieFormat);
+      setLoader(true)
     });
   }, []);
 
   const LineOne = {
     chart: {
-      type: 'column'
+      type: 'column',
+      height: '280px'
     },
-    title: 'dsdsds',
+    title: null,
     accessibility: {
       announceNewData: {
         enabled: true
@@ -73,7 +76,13 @@ const Analytics = () => {
 
   return (
     <div className="clearflex p-6">
-      <HighchartsReact highcharts={Highcharts} options={LineOne} />
+      {!loader ? (
+        <div className="clearflex loader-chiper">
+          <Loader color="transparent" />
+        </div>
+      ):(
+        <HighchartsReact highcharts={Highcharts} options={LineOne} />
+      )}
     </div>
   );
 };
