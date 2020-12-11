@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import { Loader } from "chiper-components-library";
@@ -20,6 +20,8 @@ const DetailsPage = () => {
       method: 'GET',
     }).then((resp) => {
       console.log('endpoint', resp);
+      setProduct(resp)
+      console.log("product", product)
       resolve(resp);
     }).catch((e) => {
       console.error(e);
@@ -27,9 +29,16 @@ const DetailsPage = () => {
     });
   });
 
+  useEffect(() => {
+    getReferenceInfo("127598","83377")
+  },[])
+
   const { loadingReferences, references } = useContext(GlobalContext);
   const [loadingDetails, setLoadingDetails] = useState(true);
   const [details, setDetails] = useState({});
+  const [product, setProduct] = useState({prices: []})
+
+  console.log("isauhdiusad",product)
 
   const loadDetails = () => {
     if (getParams.productId) {
@@ -62,7 +71,7 @@ const DetailsPage = () => {
             <Row gutterWidth={70}>
               <Col xl={4} lg={4} md={12} xs={12}>
                 <figure className={styles.mainFigure}>
-                  <img src={details.imageURL} alt="" />
+                  <img src={product.large} alt="" />
                 </figure>
               </Col>
 
@@ -70,18 +79,23 @@ const DetailsPage = () => {
                 <div className={styles.mainRightColumn}>
                   <div className="w-full">
                     <h1 className="w-full text-3xl mb-4 font-light">
-                      {details.referenceName}
+                      {product.name}
                     </h1>
 
                     <div className="w-full inline-flex items-center">
                       <span className={styles.mainPrice}>
-                        ${details.price.bestPrice.total}
+
+                        {product.prices.length &&
+                        <span key={product.prices[0].value} value={product.prices[0].value}>
+                          ${product.prices[0].managerPrice}
+                        </span>
+                    }
                       </span>
                       <span
                         className={styles.nice}
                         style={{ backgroundColor: details.tagColor }}
                       >
-                        Nivel de precio: 3
+                        Nivel de precio: {product.locationId}
                         {/* {details.tagBestPrice} */}
                       </span>
                     </div>
