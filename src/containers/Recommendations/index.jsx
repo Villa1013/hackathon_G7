@@ -100,7 +100,12 @@ const Recommendations = (props) => {
       <Wrapper className={styles.main}>
         <div className="w-full">
 
-          <div className="w-full h-128 bg-gray-300 rounded-lg mt-3 mx-auto">
+          <div className="w-full">
+            <h3 className="font-black text_xl">Tus Recomendados</h3>
+            <h4 className="font-black text-lg">{storeInfo?.storeName || 'Nombre de tienda desconocido'}</h4>
+          </div>
+
+          <div className="w-full h-128 bg-gray-300 rounded-lg mt-3 mx-auto relative p-1">
             <Map lng={-74.07209} lat={4.710989} onMapLoaded={handleMapLoaded} />
           </div>
 
