@@ -13,10 +13,8 @@ export const getHotItems = (storeId = DEFAULT_STORE_ID) => new Promise((resolve,
       storeId,
     },
   }).then((resp) => {
-    console.log('endpoint', resp);
     resolve(resp);
   }).catch((e) => {
-    console.error(e);
     reject(e);
   });
 });

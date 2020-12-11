@@ -1,35 +1,50 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 // import Loader from 'react-loader-spinner';
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
-// import Card from '../../components/Cards';
-// import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
-// import { getHotItems } from '../../utils/requests/getHotItems';
+import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
+import { getHotItems } from '../../utils/requests/getHotItems';
 import ListOfItems from './ListOfItems';
 import Map from '../../components/Map';
 import styles from './index.module.sass';
+import { getInfoStore } from '../../utils/requests/getInfoStore';
 
-const Recommendations = () => {
+const Recommendations = (props) => {
   const refMap = useRef(null);
   const refZone = useRef(null);
-  const getPosition = () => new Promise((resolve) => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      resolve(position);
+  const refMarker = useRef(null);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [storeInfo, setStoreInfo] = useState({});
+
+  const init = async () => {
+    setLoading(true);
+    const storeId = props?.match?.params?.storeId;
+    const hotReferences = await getHotItems(storeId);
+
+    const promises = hotReferences.map((item) => new Promise((resolve) => {
+      getReferenceInfo(storeId, item.storeReferenceId)
+        .then((res) => {
+          resolve(res);
+        });
+    }));
+
+    Promise.all(promises).then((values) => {
+      const newItems = values.map((reference) => {
+        const additionalData = hotReferences.find((h) => h.storeReferenceId === reference.id);
+        return { ...reference, ...additionalData };
+      });
+
+      setItems(newItems);
+      setLoading(false);
     });
-  });
-
-  const handleMapLoaded = async (map) => {
-    refMap.current = map;
-
-    const position = await getPosition();
-    const { coords: { longitude: lng, latitude: lat } } = position;
-    const zone = {
-      center: { lat, lng },
-      radius: 1000,
-    };
-    map.setCenter({ lat: Number(lat), lng: Number(lng) });
+    getInfoStore(storeId).then((_storeInfo) => {
+      setStoreInfo(_storeInfo);
+    });
+  };
+  const DrawingZone = () => {
+    const position = { lng: Number(storeInfo.longitude), lat: Number(storeInfo.latitude) };
+    refMap.current.setCenter(position);
 
     refZone.current = new window.google.maps.Circle({
       strokeColor: '#FF0000',
@@ -37,10 +52,31 @@ const Recommendations = () => {
       strokeWeight: 2,
       fillColor: '#FF0000',
       fillOpacity: 0.35,
-      map,
-      center: zone.center,
-      radius: zone.radius,
+      map: refMap.current,
+      center: position,
+      radius: 1000,
     });
+
+    refMarker.current = new window.google.maps.Marker({
+      position,
+      animation: window.google.maps.Animation.DROP,
+      map: refMap.current,
+    });
+
+    const infowindow = new window.google.maps.InfoWindow();
+  };
+  useEffect(() => {
+    init();
+  }, []);
+
+  useEffect(() => {
+    if (items.length && refMap.current) {
+      DrawingZone();
+    }
+  }, [JSON.stringify(storeInfo)]);
+
+  const handleMapLoaded = async (map) => {
+    refMap.current = map;
   };
 
   return (
@@ -53,8 +89,8 @@ const Recommendations = () => {
             <Map lng={-74.07209} lat={4.710989} onMapLoaded={handleMapLoaded} />
           </div>
 
-          <div className="mt-3 w-full">
-            <ListOfItems />
+          <div className="mt-4 w-full">
+            <ListOfItems items={items} loading={loading} />
           </div>
 
         </div>
