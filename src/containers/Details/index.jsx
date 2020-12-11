@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader } from 'chiper-components-library';
 import Header from '../../components/Header';
@@ -44,7 +44,7 @@ const DetailsPage = () => {
       const data = references.find(
         (item) => item.referenceId === Number(getParams.productId),
       );
-      debugger;
+
       setDetails(data);
       setLoadingDetails(false);
     }
