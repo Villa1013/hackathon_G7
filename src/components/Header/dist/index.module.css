@@ -1,0 +1,133 @@
+.bg-white {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.bg-black {
+  background-color: #2b2b2b;
+  color: #ffffff;
+}
+
+.bg-pink {
+  background-color: #eb516a;
+  color: #000000;
+}
+
+.bg-green {
+  background-color: #22b14c;
+  color: #ffffff;
+}
+
+.bg-gray {
+  background-color: #777777;
+  color: #ffffff;
+}
+
+.bg-light-gray {
+  background-color: #f3f3f3;
+  color: #000000;
+}
+
+.bg-red {
+  background-color: #fa0236;
+  color: #ffffff;
+}
+
+.bg-border-color {
+  background-color: #f3f3f3;
+  color: #000000;
+}
+
+.bg-primary {
+  background-color: #FA0236;
+  color: #ffffff;
+}
+
+.header {
+  background-color: #ffffff;
+  padding: 12px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99;
+  box-shadow: 0 2px 6px 0 #2b2b2b21;
+}
+
+.wrapper {
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.logo {
+  display: inline-flex;
+}
+.logo img {
+  width: 70px;
+  display: inline-flex;
+}
+
+.searh_global {
+  display: inline-flex;
+  width: 27%;
+  position: relative;
+}
+.searh_global input {
+  width: 100%;
+  background-color: #f7f7f7;
+  color: #77798c;
+  border: 1px solid #f3f3f3;
+  border-radius: 6px;
+  padding: 11px 25px 11px 45px;
+  outline: none;
+  box-sizing: border-box;
+  font-weight: 500;
+}
+.searh_global input::placeholder {
+  color: #77798c;
+}
+.searh_global i {
+  color: #212121;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 15px;
+  line-height: 48px;
+  z-index: 3;
+}
+
+.headerSocial {
+  display: flex;
+  align-items: center;
+}
+.headerSocial a {
+  display: block;
+  margin: 0 13px 0 0;
+}
+.headerSocial img {
+  height: 35px;
+}
+.headerSocial h3 {
+  font-weight: 800;
+}
+
+.toggleButton {
+  font-size: 18px;
+  height: 2.66rem;
+  padding: 0.66rem 1.33rem;
+  background: #fff;
+  border: none;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
+  font-weight: 700;
+  border-radius: 30px;
+  color: red;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 3;
+  bottom: 3rem;
+  right: 2.66rem;
+}

@@ -5,13 +5,15 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { postMap } from '../../../utils/requests/postMap';
 
-const Analytics = () => {
+const Analytics = (
+  priceLevel
+) => {
   const [loader, setLoader] = React.useState(false);
   const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
     postMap(334250, 117, 3).then((dataMap) => {
-      const serieFormat = dataMap.map((item,index) => ({
+      const serieFormat = dataMap.map((item) => ({
         name: item.date.value,
         y: item.orderRate,
         drilldown: item.storeReference,

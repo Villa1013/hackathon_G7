@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import { Loader } from 'chiper-components-library';
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
+import Footer from '../../components/Footer';
 import { Row, Col } from '../../components/Grid';
 import GlobalContext from '../../context/global';
 import Analytics from './Analytics/analytics';
 import styles from './index.module.sass';
 import { APIResquest } from '../../utils/api';
-import { getReferenceInfo } from '../../utils/requests/getReferenceInfo';
+import { AiFillFire, AiFillExclamationCircle } from 'react-icons/ai';
+import { BsFillStarFill } from 'react-icons/bs';
 import { getHotItems } from '../../utils/requests/getHotItems';
 import { getInfoStore } from '../../utils/requests/getInfoStore';
 import { getLastOrders } from '../../utils/requests/getLastOrders';
@@ -16,8 +18,6 @@ import { getLastOrders } from '../../utils/requests/getLastOrders';
 const DetailsPage = () => {
   const day = 30;
   const getParams = useParams();
-
-
 
   const getReferenceInfo = (storeId, storeReferenceId) => new Promise((resolve, reject) => {
     APIResquest({
@@ -134,7 +134,7 @@ const DetailsPage = () => {
               <Col xl={8} lg={8} md={12} xs={12}>
                 <div className={styles.mainRightColumn}>
                   <div className="w-full">
-                    <h1 className="w-full text-3xl mb-4 font-light">
+                    <h1 className="w-full text-3xl mb-1 font-black">
                       {product.name}
                     </h1>
 
@@ -159,8 +159,27 @@ const DetailsPage = () => {
                         {/* {details.tagBestPrice} */}
                       </span>
                     </div>
+                    
+                    <div className="flex mt-3 flex-grow items-end mb-4">
+                      <div className="border border-gray-300 rounded-lg w-full py-2 flex clearfix px-3">
+                        <AiFillFire data-tip="Esta referencia esta siendo muy bien vendida en tu zona" className="text-red-500 mr-2 text-xl" />
+                        {
+                          product.rating > 0.3
+                          && <BsFillStarFill data-tip="Recomendado para ti!" className="text-yellow-500 mr-2 text-xl" />
+                        }
+                        {
+                          !product.isInLastOrders
+                          && <AiFillExclamationCircle data-tip="Estas perdiendo ventas en tu zona de este producto" className="text-orange-500 text-xl" />
+                        }
+                      </div>
+                    </div>
 
-                    <div className="w-full inline-flex items-center mt-4">
+                    <a href="https://chiper.co/pedir/dashboard" target="_blank" className="btn btn-border btn-effect">
+                      <i className="fas fa-shopping-cart" />{' '}
+                      Comprar
+                    </a>
+
+                    {/*<div className="w-full inline-flex items-center mt-4">
 
                       <span className="inline-flex items-center text-sm tracking-tighter px-3 py-1 leading-snug rounded-md font-black bg-black text-white shadow">
                         1 unit
@@ -181,12 +200,12 @@ const DetailsPage = () => {
                         </a>
                       </span>
 
-                    </div>
+                    </div>*/}
                   </div>
 
-                  <div className="w-full border-box grid grid-cols-3 border border-gray-300 rounded-lg">
-                    <div className="w-full h-full border-box p-5">
-                      <h2 className="w-full inline-block mb-2 text-lg">
+                  <div className="w-full border-box grid grid-cols-3 border border-gray-300 rounded-lg mt-4">
+                    <div className="w-full h-full border-box py-3 px-4">
+                      <h2 className="w-full inline-block mb-2 text-lg font-medium">
                         Ordenes en el mes:
                       </h2>
 
@@ -195,7 +214,7 @@ const DetailsPage = () => {
                       </span>
                     </div>
 
-                    <div className="w-full h-full border-box p-5 bg-gray-200">
+                    <div className="w-full h-full border-box py-3 px-4 border-l border-gray-300">
                       <span className={styles.mainHistoryDescription}>
                         Rating del producto
                       </span>
@@ -204,7 +223,7 @@ const DetailsPage = () => {
                       </span>
                     </div>
 
-                    <div className="w-full h-full border-box p-5 bg-gray-200 border-l border-gray-300">
+                    <div className="w-full h-full border-box py-3 px-4 border-l border-gray-300">
                       <span className={styles.mainHistoryDescription}>
                         Macro:
                         {/* {day} days: */}
@@ -237,11 +256,15 @@ const DetailsPage = () => {
             </div>
           ) : (
             <section className="w-full">
-              <Analytics />
+              <Analytics
+                priceLevel={product.priceLevel}
+              />
             </section>
           )}
         </Wrapper>
       </div>
+
+      <Footer />
     </>
   );
 };
