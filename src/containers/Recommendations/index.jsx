@@ -119,17 +119,17 @@ const Recommendations = (props) => {
         }
         <div className={`w-full h-full bg-gray-100 rounded-lg p-3 -mb-6 ${loading ? 'hidden' : ''}`}>
 
-          <div className="banner-home clearfix w-full flex items-center text-center rounded-lg bg-gray-400 mb-6">
+          <div className="banner-home clearfix w-full flex items-center text-center rounded-lg bg-gray-400 mb-8">
             <div className="w-full">
               <h3 className="font-black">Bienvenido!</h3>
               <h1 className="font-black">Conoce los productos mas vendidos en tu zona</h1>
               <p className="font-medium">Eleva tus ventas con estos productos recomendados...</p>
+              <h4><i className="fas fa-store"></i> {storeInfo?.storeName || 'Nombre de tienda desconocido'}</h4>
             </div>
           </div>
 
           <div className="w-full clearflex">
-            <h3 className="font-black text-xl">Referencias Recomendadas</h3>
-            <h4 className="font-black text-lg">{storeInfo?.storeName || 'Nombre de tienda desconocido'}</h4>
+            <h3 className="font-black text-xl clearfix mb-2">Referencias Recomendadas</h3>
           </div>
 
           <div className={styles.gridBody}>
@@ -139,7 +139,7 @@ const Recommendations = (props) => {
             <ListOfItems items={items} loading={loading} lastOrders={lastOrders} />
           </div>
 
-          <div className="w-full clearflex">
+          <div className="w-full clearflex mt-10 mb-6">
             <h3 className="font-black text-xl mb-3 mt-5 block">Promos Recomendadas</h3>
             <Carousel
               autoPlay={true}

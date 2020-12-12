@@ -38,7 +38,7 @@ const Header = () => {
       </Wrapper>
     </header>
 
-    <div className={`animationAssesor ${styles.toggleButton}`}><i className="iconsminds-mens"></i> Asesoria Online</div>
+    <div className={`animationAssesor ${styles.toggleButton}`}><i className="fas fa-comments"></i> Asesoria Online</div>
     </>
   );
 };

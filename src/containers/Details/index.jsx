@@ -126,7 +126,7 @@ const DetailsPage = () => {
           ) : (
             <Row gutterWidth={70}>
               <Col xl={4} lg={4} md={12} xs={12}>
-                <figure className={styles.mainFigure}>
+                <figure className={`shadow-sm ${styles.mainFigure}`}>
                   <img src={product.large} alt="" />
                 </figure>
               </Col>
@@ -174,7 +174,7 @@ const DetailsPage = () => {
                       </div>
                     </div>
 
-                    <a href="https://chiper.co/pedir/dashboard" target="_blank" className="btn btn-border btn-effect">
+                    <a href="https://chiper.co/pedir/dashboard" target="_blank" className="btn btn-border black btn-effect">
                       <i className="fas fa-shopping-cart" />{' '}
                       Comprar
                     </a>
